@@ -13,7 +13,7 @@ class PFMatch {
   num tickSum = 0;
   List<num> tickList = new List.filled(maxSamples, 0);
 
-  num fps = 0;
+  num averageDelta = 0;
 
   final ForceServer fs;
   final String matchId;
@@ -23,10 +23,9 @@ class PFMatch {
   Map<String, Entity> entities = {};
   Map<String, int> lastProcessedInput = {};
 
-
   PFMatch(this.fs, this.matchId) {
     players = new List();
-    watch  = new Stopwatch();
+    watch = new Stopwatch();
     inputs = new List();
   }
 
@@ -46,15 +45,15 @@ class PFMatch {
     watch.reset();
     watch.start();
 
-    fps = getAverageTick(delta);
-    
+    averageDelta = getAverageDelta(delta);
+
     processInputs();
     sendWorldState();
-    renderWorld();
+    updateWorld();
   }
 
   void processInputs() {
-    while(inputs.length > 0) {
+    while (inputs.length > 0) {
       Input input = inputs.removeAt(0);
 
       if (validateInput(input)) {
@@ -69,7 +68,7 @@ class PFMatch {
     return true;
 
     // TODO
-    if (input.pressTime.abs() > 1/40) {
+    if (input.pressTime.abs() > 1 / 40) {
       return false;
     }
     return true;
@@ -80,7 +79,8 @@ class PFMatch {
 
     for (int i = 0; i < entities.length; i++) {
       Entity entity = entities.values.elementAt(i);
-      EntityState state = new EntityState(entities.keys.elementAt(i), entity.position, lastProcessedInput[entities.keys.elementAt(i)]);
+      EntityState state = new EntityState(entities.keys.elementAt(i),
+          entity.position, lastProcessedInput[entities.keys.elementAt(i)]);
 
       worldState.add(state.toJson());
     }
@@ -88,10 +88,11 @@ class PFMatch {
     fs.send('${matchId} state', worldState);
   }
 
-  void renderWorld() {
+  void updateWorld() {
+    // TODO logic here
   }
 
-  num getAverageTick(num newTick) {
+  num getAverageDelta(num newTick) {
     tickSum -= tickList[tickIndex];
     tickSum += newTick;
     tickList[tickIndex] = newTick;

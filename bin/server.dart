@@ -35,16 +35,14 @@ main() async {
       matchId = GfycatMatchNames.getRandomMatchId();
     }
 
-    Player player = new Player(name, new Uuid().v1().toString());
-    SessionData sessionData = new SessionData(matchId, player.uuid);
-
-    PFMatch match;
-
     // first player
     if (!matches.containsKey(matchId)) {
       matches[matchId] = new PFMatch(fs, matchId);
     }
-    match = matches[matchId];
+
+    PFMatch match = matches[matchId];
+    Player player = new Player(name, new Uuid().v1().toString());
+    SessionData sessionData = new SessionData(matchId, player.uuid);
 
     match.players.add(player);
 
@@ -52,7 +50,6 @@ main() async {
 
     // on last player
     if (match.players.length == PFMatch.maxPlayers) {
-
       List lobby = new List();
 
       for (Player p in match.players) {
@@ -60,7 +57,6 @@ main() async {
         match.entities[p.uuid] = new Entity();
         match.lastProcessedInput[p.uuid] = 0;
       }
-
 
       fs.on('$matchId input', (mp, sender) {
         Input input = new Input.fromJson(mp.json);

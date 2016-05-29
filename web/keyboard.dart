@@ -18,7 +18,6 @@ class Keyboard {
     });
   }
 
-
   StreamSubscription onKeyDown(int keyCode, Function handleKeyDown) {
     StreamSubscription streamSubscription = document.onKeyDown.listen((e) {
       if (e.keyCode == keyCode) handleKeyDown();

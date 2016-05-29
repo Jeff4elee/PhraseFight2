@@ -53,7 +53,7 @@ void main() {
       fc.on('${sessionData.matchId} state', (mp, sender) {
         List<EntityState> entityStates = new List();
         for (int i = 0; i < mp.json.length; i++) {
-          EntityState eS = new EntityState.fromJson( mp.json[i]);
+          EntityState eS = new EntityState.fromJson(mp.json[i]);
           entityStates.add(eS);
         }
         client.messages.add(entityStates);

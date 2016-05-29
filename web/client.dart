@@ -15,6 +15,7 @@ class Client {
   final ForceClient fc;
   final SessionData sessionData;
 
+  // reconciliation
   int inputSequenceNumber = 0;
   List<Input> pendingInputs;
 
@@ -30,7 +31,7 @@ class Client {
   num tickSum = 0;
   List<num> tickList = new List.filled(maxSamples, 0);
 
-  num fps = 0;
+  num averageDelta = 0;
 
   Stage stage;
 
@@ -114,7 +115,7 @@ class Client {
     watch.reset();
     watch.start();
 
-    fps = getAverageTick(delta);
+    averageDelta = getAverageDelta(delta);
 
     List<int> keycodes = new List();
     if (Keyboard.sharedInstance().isKeyDown(PFKeyCode.RIGHT)) {
@@ -127,7 +128,8 @@ class Client {
       return;
     }
 
-    Input input = new Input(sessionData.playerUuid, delta, inputSequenceNumber++, keycodes);
+    Input input = new Input(
+        sessionData.playerUuid, delta, inputSequenceNumber++, keycodes);
 
     fc.send('${sessionData.matchId} input', input.toJson());
     entities[sessionData.playerUuid].applyInput(input);
@@ -135,7 +137,7 @@ class Client {
     pendingInputs.add(input);
   }
 
-  num getAverageTick(num newTick) {
+  num getAverageDelta(num newTick) {
     tickSum -= tickList[tickIndex];
     tickSum += newTick;
     tickList[tickIndex] = newTick;

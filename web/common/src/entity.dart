@@ -1,7 +1,7 @@
 part of common;
 
 class Entity {
-  num speed = 2;
+  num speed = 1;
   Position position;
 
   var displayObject;
@@ -10,6 +10,7 @@ class Entity {
     position = new Position(0, 0);
   }
 
+  // apply user input to this entity
   void applyInput(Input input) {
     int direction = 0;
     if (input.keyCodes.contains(PFKeyCode.RIGHT)) {

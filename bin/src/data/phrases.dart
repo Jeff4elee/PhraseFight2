@@ -1,16 +1,11 @@
 part of server;
 
 class Phrases {
-
   static Phrase getPhrase(int index) {
     String text = _phrases[index].trim();
     int points = text.split('.').length;
 
-    Phrase phrase = new Phrase()
-      ..phrase = text
-      ..points = points;
-
-    return phrase;
+    return new Phrase(text, points);
   }
 
   static final List<String> _phrases = '''I once tried to eat a rock.
@@ -107,5 +102,6 @@ The only mystery in life is why the kamikaze pilots wore helmets.
 
 The people who make lyric videos on youtube are the backbone of this nation.
 
-Sometimes I look at people and wonder how they’ve made it this far.'''.split('\n\n');
+Sometimes I look at people and wonder how they’ve made it this far.'''
+      .split('\n\n');
 }

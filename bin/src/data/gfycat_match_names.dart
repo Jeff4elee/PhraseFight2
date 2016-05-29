@@ -1,8 +1,6 @@
 part of server;
 
 class GfycatMatchNames {
-
-
   static String getRandomMatchId() {
     Random random = new Random();
     String ad1 = _adjectives[random.nextInt(_adjectives.length)];
@@ -1760,7 +1758,8 @@ zigzagsalamander
 zonetailedpigeon
 zooplankton
 zopilote
-zorilla'''.split('\n');
+zorilla'''
+      .split('\n');
 
   static final _adjectives = '''abandoned
 able
@@ -3262,5 +3261,6 @@ wheat
 white
 whitesmoke
 yellow
-yellowgreen'''.split('\n');
+yellowgreen'''
+      .split('\n');
 }
