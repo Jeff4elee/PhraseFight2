@@ -22,8 +22,6 @@ class Client {
 
   List<List<EntityState>> messages;
 
-  Keyboard keyboard = Keyboard.sharedInstance();
-
   Timer timer;
   Stopwatch watch;
 
@@ -119,10 +117,10 @@ class Client {
     fps = getAverageTick(delta);
 
     List<int> keycodes = new List();
-    if (keyboard.isKeyDown(PFKeyCode.RIGHT)) {
+    if (Keyboard.sharedInstance().isKeyDown(PFKeyCode.RIGHT)) {
       keycodes.add(PFKeyCode.RIGHT);
     }
-    if (keyboard.isKeyDown(PFKeyCode.LEFT)) {
+    if (Keyboard.sharedInstance().isKeyDown(PFKeyCode.LEFT)) {
       keycodes.add(PFKeyCode.LEFT);
     }
     if (keycodes.isEmpty) {
