@@ -1,7 +1,7 @@
 part of common;
 
 class Entity {
-  num speed = 1;
+  num speed = .07;
   Position position;
 
   var displayObject;

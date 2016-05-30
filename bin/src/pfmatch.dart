@@ -1,17 +1,17 @@
 part of server;
 
 class PFMatch {
-  static final int maxPlayers = 2;
+  static const int maxPlayers = 2;
 
   List<Player> players;
 
   Timer timer;
   Stopwatch watch;
 
-  static final int maxSamples = 100;
+  static const int maxSamples = 100;
   int tickIndex = 0;
   num tickSum = 0;
-  List<num> tickList = new List.filled(maxSamples, 0);
+  List<num> tickList;
 
   num averageDelta = 0;
 
@@ -27,6 +27,7 @@ class PFMatch {
     players = new List();
     watch = new Stopwatch();
     inputs = new List();
+    tickList = new List.filled(maxSamples, 0);
   }
 
   bool isFull() => players.length == maxPlayers;

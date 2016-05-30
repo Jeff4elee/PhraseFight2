@@ -12,4 +12,11 @@ class Position extends JsonAble {
 
   @override
   List toJson() => [x, y];
+
+  void lerpPos(Position p2, num f) {
+    x = lerp(x, p2.x, f);
+    y = lerp(y, p2.y, f);
+  }
+
+  num lerp(num a, num b, num f) => a + f * (b - a);
 }

@@ -70,13 +70,22 @@ class Client {
   }
 
   void update() {
-    processServerMessages();
+    watch.stop();
 
-    processInputs();
+    num delta = watch.elapsedMilliseconds;
+
+    watch.reset();
+    watch.start();
+
+    averageDelta = getAverageDelta(delta);
+
+    processServerMessages(delta);
+
+    processInputs(delta);
     renderWorld();
   }
 
-  void processServerMessages() {
+  void processServerMessages(num delta) {
     while (messages.length > 0) {
       List<EntityState> entityStates = messages.removeAt(0);
       for (int i = 0; i < entityStates.length; i++) {
@@ -98,25 +107,17 @@ class Client {
             }
           }
         } else {
-          // other stuff
-          entity.position.x += state.position.x;
-          entity.position.x /= 2;
+          // TODO magic numbers here gg
+          entity.position.lerpPos(state.position, 15 * delta * 0.001);
+
           entity.displayObject.x = entity.position.x;
+          entity.displayObject.y = entity.position.y;
         }
       }
     }
   }
 
-  void processInputs() {
-    watch.stop();
-
-    num delta = watch.elapsedMilliseconds;
-
-    watch.reset();
-    watch.start();
-
-    averageDelta = getAverageDelta(delta);
-
+  void processInputs(delta) {
     List<int> keycodes = new List();
     if (Keyboard.sharedInstance().isKeyDown(PFKeyCode.RIGHT)) {
       keycodes.add(PFKeyCode.RIGHT);

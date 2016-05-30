@@ -1,5 +1,7 @@
 library common;
 
+import 'dart:math' as math;
+
 part 'src/login_data.dart';
 part 'src/session_data.dart';
 part 'src/player.dart';
